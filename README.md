@@ -5,6 +5,7 @@
 * Flask
 * Flask_sqlalchemy
 * Flask_marshmallow
+* Flask_login
 * Marshmallow-Sqlalchemy
 * Geopy
 ```console
