@@ -1,7 +1,7 @@
 # AMS_EventLink_WebApp
 
 # Install
-## Libraries
+### Libraries
 * Flask
 * Flask_sqlalchemy
 * Flask_marshmallow
@@ -10,7 +10,7 @@
 ```console
 $ pip3 install -r requirements.txt 
 ```  
-## Node JS
+### Node JS
 Install Node.js 12.6.1 (https://nodejs.org/en/blog/release/v12.16.1/) then run:
 ```console
 $ npm rebuild node-sass
