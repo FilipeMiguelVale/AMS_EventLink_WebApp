@@ -1,0 +1,15 @@
+/build
+/node_modules
+package-lock.json
+*.pyc
+/__pycache__/*
+
+#flask Backend
+flask_backend/__pycache__/*
+flask_backend/static/*
+flask_backend/templates/*
+
+#react Frontend
+/react_frontend/node_modules/*
+venv/*
+.idea/*
