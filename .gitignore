@@ -10,6 +10,6 @@ flask_backend/static/*
 flask_backend/templates/*
 
 #react Frontend
-#/react_frontend/node_modules/*
+/react_frontend/node_modules/*
 venv/*
 .idea/*
