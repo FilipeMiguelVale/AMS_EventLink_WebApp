@@ -8,6 +8,7 @@
 * Flask_login
 * Marshmallow-Sqlalchemy
 * Geopy
+* Wget
 ```console
 $ pip3 install -r requirements.txt 
 ```  
@@ -25,7 +26,7 @@ Inside the "react_frontend" folder run:
 ```console
 $ npm run build
 ```
-Inside the "flask_backend" folder run:
+Inside the project folder run:
 ```console
 $ python3 app.py
 ```
