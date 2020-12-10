@@ -8,6 +8,7 @@ package-lock.json
 flask_backend/__pycache__/*
 flask_backend/static/*
 flask_backend/templates/*
+flask_backend/database/db.sqlite
 
 #react Frontend
 /react_frontend/node_modules/*
