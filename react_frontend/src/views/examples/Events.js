@@ -205,7 +205,7 @@ class Events extends React.Component {
         </th>
         <th scope="row" width="5%">
           <span className="mb-0 text-sm">
-            {value["location"].substring(0,45)}
+            {value["address"].substring(0,45)}
           </span>
         </th>
         <th scope="row" width="5%">
@@ -500,7 +500,7 @@ class Events extends React.Component {
                          <i  className="fas fa-map-marked-alt"/>
                        </div>
                        <div >
-                         <span className="ml-1">Location</span>
+                         <span className="ml-1">Address</span>
                        </div>
                       </th>
                       <th scope="col"  style={{textAlign:"center"}}>

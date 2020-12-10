@@ -8,6 +8,7 @@ from flask_backend.database.db_models import event, Car
 from flask_backend.database.queries import *
 from flask_backend.erros import *
 from datetime import datetime
+import json
 
 # data processing
 from flask_backend.data_processing import get_location_address, severity_calc
@@ -27,8 +28,8 @@ inventory = [{"name":"Case beams","in_house":2,"out_house":8,"last_mod":"2020-12
                     {"name":"dmx cable 15m","in_house":5,"out_house":10,"last_mod":"2020-12-07 18:47","price_each":12},
                     {"name":"mic shure sm58 beta A","in_house":10,"out_house":5,"last_mod":"2020-12-07 18:47","price_each":255}]
 
-events = [{"name":"Evento1","date":"2020-12-07 18:00","location":"University of Aveiro","staff":"Filipe","services":"Space, sound, light",
-           "material":" 10 Beams 7r, 20 wash","budget":"4500","ticketline":"98","status":"ready"}]
+events = [{"name":"Evento1","date":"2020-12-07 18:00","address":"University of Aveiro","staff":"Filipe","services":"Space, sound, light",
+           "material":" 10 Beams 7r, 20 wash","budget":"4500","ticketline":"98","status":"ready", "email":"teste@teste.com"}]
 
 @app.route('/login/request', methods=['POST'])
 def login():
@@ -69,41 +70,29 @@ def home():
 
 
 # Create a event
-@app.route('/add_event', methods=['POST'])
+@app.route('/create_event', methods=['POST'])
 def add_event():
-    location = request.json['location']
-    video_id = int(request.json['video_id'])
+    print(request.json)
+    request.json["date"]=request.json["start_date"] + " " + request.json["start_time"]
+    request.json["staff"]="No Staff Assigned"
+    request.json["email"]=current_user.email
+    request.json["services"]=""
+    if bool(request.json["sound"]):
+        request.json["services"]+="Sound "
+    if bool(request.json["light"]):
+        request.json["services"]+="Light "
+    if bool(request.json["video"]):
+        request.json["services"]+="Video "
+    if bool(request.json["space"]):
+        request.json["services"]+="Space "
+    if bool(request.json["catering"]):
+        request.json["services"] += "Catering "
+    if not bool(request.json["ticketline"]):
+        request.json["ticketline"] += "None"
 
-    event = get_event_by(location, filter="belongs")
-
-    if not event:
-        location["address"],city = get_location_address(location["lat"],location["lng"])
-        event = event(location,city,video_id)
- 
-    event.n_cars_involved += 1
-    n_people = request.json["n_people"]
-    event.n_people += request.json["n_people"]
-
-    velocity = request.json["velocity"]
-    ABS = request.json["ABS"]
-    temperature = request.json["temperature"]
-    airbag = True #request.json["airbag"]
-    overturned = request.json["overturned"]
-    hazard_ligths = request.json["hazard_lights"]
-    num_seatbelts = request.json["all_seatbelts"]
-
-    severity = severity_calc(n_people,velocity, ABS, airbag, overturned, num_seatbelts)    
-
-    if event.n_cars_involved > 1:
-        event.damage = (((event.damage) * (event.n_cars_involved - 1)) + severity) / event.n_cars_involved
-    else :
-        event.damage = severity
-    
-    car = Car(velocity,n_people,temperature,airbag,ABS,hazard_ligths,overturned,severity)
-
-    add_event_to_database(event,car)
-    init_media(event.id, (location["lat"], location["lng"]))
-    return event_schema.jsonify(event)
+    print(request.json)
+    events.append(request.json)
+    return jsonify({"response":"Done"})
 
 
 @app.route('/add_user', methods=['POST'])
@@ -270,10 +259,13 @@ def get_event_icon(status):
 
 @app.route('/list_events', methods=['GET'])
 def get_events():
-    if int(current_user.role) == 0:
-        return jsonify(events)
-    else:
-        return jsonify(events)#return get_event_by(None, filter="all",city=current_user.city)
+    ret = []
+    for event in events:
+        print(event)
+        print(type(event))
+        if event["email"] == current_user.email or int(current_user.role)==0:
+            ret.append(event)
+    return jsonify(ret)#return get_event_by(None, filter="all",city=current_user.city)
 
 #Available filters:
 # default = between -> show events by date
@@ -282,14 +274,13 @@ def get_events():
 #
 @app.route('/range_events', methods=['GET'])
 def get_range_events():
-    id = request.args.get('id', 1, type=int)
-    filter = request.args.get('filter', "between", type=str)
-    quantity=request.args.get('quantity',"All",type=str)
-    order=request.args.get('order',"Ascending",type=str)
-    if int(current_user.role) == 0:
-        return jsonify(events)#return get_event_by(((id - 1) * 10, id * 10), filter=filter,quantity=quantity,order=order)
-    else:
-        return jsonify(events)#return get_event_by(((id - 1) * 10, id * 10), filter=filter,quantity=quantity,order=order,city=current_user.city)
+    ret = []
+    for event in events:
+        print(event)
+        print(type(event))
+        if event["email"] == current_user.email or int(current_user.role)==0:
+            ret.append(event)
+    return jsonify(ret)  # return get_event_by(None, filter="all",city=current_user.city)
 
 
 

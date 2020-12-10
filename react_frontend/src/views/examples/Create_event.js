@@ -88,8 +88,7 @@ class Create_event extends React.Component {
         this.handleChange = this.handleChange.bind(this);
 
     }
-
-
+    
     handleChange(event) {
         const target = event.target;
         var value = target.value;
@@ -125,12 +124,24 @@ class Create_event extends React.Component {
                 profession: this.state.profession,
                 telephone: this.state.telephone,
                 work_institution: this.state.work_institution,
+                city: this.state.city,
+                promotor_name: this.state.promotor_name,
+                vat: this.state.vat,
+                dropDown1Value: this.state.dropDown1Value,
+                dropDown2Value: this.state.dropDown2Value,
+                dropDown3Value: this.state.dropDown3Value,
+                ticketline: this.state.ticketline,
+                sound: this.state.sound,
+                light: this.state.light,
+                video: this.state.video,
+                space: this.state.space,
+                catering: this.state.catering
             }),
         }).then(res => res.json())
             .then(
                 (result) => {
                     if (result['response'] == "Done")
-                        this.props.history.push("/admin");
+                        this.props.history.push("/admin/events");
                     else {
                         this.setState({error: result['error']});
 
@@ -283,8 +294,8 @@ class Create_event extends React.Component {
                                                             className="form-control-alternative"
                                                             id="dateofbirth"
                                                             type="date"
-                                                            name="birth_date"
-                                                            value={this.state.birth_date}
+                                                            name="start_date"
+                                                            value={this.state.start_date}
                                                             onChange={this.handleChange}
                                                         />
                                                     </FormGroup>
@@ -301,8 +312,8 @@ class Create_event extends React.Component {
                                                             className="form-control-alternative"
                                                             id="dateofbirth"
                                                             type="time"
-                                                            name="birth_date"
-                                                            value={this.state.birth_date}
+                                                            name="start_time"
+                                                            value={this.state.start_time}
                                                             onChange={this.handleChange}
                                                         />
                                                     </FormGroup>
@@ -319,8 +330,8 @@ class Create_event extends React.Component {
                                                             className="form-control-alternative"
                                                             id="dateofbirth"
                                                             type="date"
-                                                            name="birth_date"
-                                                            value={this.state.birth_date}
+                                                            name="end_date"
+                                                            value={this.state.end_date}
                                                             onChange={this.handleChange}
                                                         />
                                                     </FormGroup>
@@ -337,8 +348,8 @@ class Create_event extends React.Component {
                                                             className="form-control-alternative"
                                                             id="dateofbirth"
                                                             type="time"
-                                                            name="birth_date"
-                                                            value={this.state.birth_date}
+                                                            name="end_time"
+                                                            value={this.state.end_time}
                                                             onChange={this.handleChange}
                                                         />
                                                     </FormGroup>
