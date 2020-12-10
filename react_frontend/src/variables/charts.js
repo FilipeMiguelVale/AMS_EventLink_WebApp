@@ -303,6 +303,7 @@ function parseOptions(parent, options) {
 
 // Example 1 of Chart inside src/views/Index.js (Sales value - Card)
 let chartExample1 = {
+  aux:"",
   options: {
     scales: {
       yAxes: [
@@ -314,7 +315,7 @@ let chartExample1 = {
           ticks: {
             callback: function(value) {
               if (!(value % 10)) {
-                return value + "k";
+                return value ;
               }
             }
           }
@@ -332,7 +333,7 @@ let chartExample1 = {
             content += label;
           }
 
-          content += yLabel + "k";
+          content += yLabel ;
           return content;
         }
       }
@@ -340,19 +341,22 @@ let chartExample1 = {
   },
   data1: canvas => {
     return {
-      labels: ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      labels: ["Jan","Feb","Mar","Apr","May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
       datasets: [
         {
           label: "Performance",
-          data: [ Math.floor(Math.random() * 1000),
-                  Math.floor(Math.random() * 1000),
-                  Math.floor(Math.random() * 1000),
-                  Math.floor(Math.random() * 1000),
-                  Math.floor(Math.random() * 1000),
-                  Math.floor(Math.random() * 1000),
-                  Math.floor(Math.random() * 1000),
-                  Math.floor(Math.random() * 1000),
-                  Math.floor(Math.random() * 1000)]
+          data: [ Math.floor(Math.random() * 100),
+                  Math.floor(Math.random() * 100),
+                  Math.floor(Math.random() * 100),
+                  Math.floor(Math.random() * 100),
+                  Math.floor(Math.random() * 100),
+                  Math.floor(Math.random() * 100),
+                  Math.floor(Math.random() * 100),
+                  Math.floor(Math.random() * 100),
+                  Math.floor(Math.random() * 100),
+                  Math.floor(Math.random() * 100),
+                  Math.floor(Math.random() * 100),
+                  Math.floor(Math.random() * 100)]
         }
       ]
     };
@@ -360,19 +364,18 @@ let chartExample1 = {
 
   data2: canvas => {
     return {
-      labels: ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      labels: ["Mon", "Tues", "Wed", "Thu", "Fri", "Sat", "Sun"],
       datasets: [
         {
           label: "Performance",
-          data: [ Math.floor(Math.random() * 60),
-                  Math.floor(Math.random() * 60),
-                  Math.floor(Math.random() * 60),
-                  Math.floor(Math.random() * 60),
-                  Math.floor(Math.random() * 60),
-                  Math.floor(Math.random() * 60),
-                  Math.floor(Math.random() * 60),
-                  Math.floor(Math.random() * 60),
-                  Math.floor(Math.random() * 60)]
+          data: [ Math.floor(Math.random() * 100),
+                  Math.floor(Math.random() * 100),
+                  Math.floor(Math.random() * 100),
+                  Math.floor(Math.random() * 100),
+                  Math.floor(Math.random() * 100),
+                  Math.floor(Math.random() * 100),
+                  Math.floor(Math.random() * 100),
+                  Math.floor(Math.random() * 100)]
         }
       ]
     };
