@@ -36,23 +36,7 @@ class Header extends React.Component {
               <Row>
                 <Col lg="6" xl="3">
                   <Card className="card-stats mb-4 mb-xl-0">
-                    <Example title={"Reports"}
-                             icon_name={"icon icon-shape bg-purple text-white rounded-circle shadow"}
-                             icon={"fas fa-chart-bar"}
-                    />
-                  </Card>
-                </Col>
-                <Col lg="6" xl="3">
-                  <Card className="card-stats mb-4 mb-xl-0">
-                    <Example title={"events"}
-                             icon_name={"icon icon-shape bg-red text-white rounded-circle shadow"}
-                             icon={"fas fa-car-crash"}
-                    />
-                  </Card>
-                </Col>
-                <Col lg="6" xl="3">
-                  <Card className="card-stats mb-4 mb-xl-0">
-                    <Example title={"Users"}
+                    <Example title={"Clients"}
                              icon_name={"icon icon-shape bg-yellow text-white rounded-circle shadow"}
                              icon={"fas fa-users"}
                     />
@@ -60,9 +44,25 @@ class Header extends React.Component {
                 </Col>
                 <Col lg="6" xl="3">
                   <Card className="card-stats mb-4 mb-xl-0">
-                    <Example title={"Medical care"}
+                    <Example title={"events"}
+                             icon_name={"icon icon-shape bg-purple text-white rounded-circle shadow"}
+                             icon={"fas fa-calendar-alt"}
+                    />
+                  </Card>
+                </Col>
+                <Col lg="6" xl="3">
+                  <Card className="card-stats mb-4 mb-xl-0">
+                    <Example title={"Services"}
                              icon_name={"icon icon-shape bg-blue text-white rounded-circle shadow"}
-                             icon={"fas fa-ambulance"}
+                             icon={"fas fa-users-cog"}
+                    />
+                  </Card>
+                </Col>
+                <Col lg="6" xl="3">
+                  <Card className="card-stats mb-4 mb-xl-0">
+                    <Example title={"Billing"}
+                             icon_name={"icon icon-shape bg-red text-yellow rounded-circle shadow"}
+                             icon={"fas fa-coins"}
                     />
                   </Card>
                 </Col>
