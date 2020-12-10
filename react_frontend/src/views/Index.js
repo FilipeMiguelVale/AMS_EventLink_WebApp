@@ -82,7 +82,7 @@ class Index extends React.Component {
                       <h6 className="text-uppercase text-light ls-1 mb-1">
                         Overview
                       </h6>
-                      <h2 className="text-white mb-0">events</h2>
+                      <h2 className="text-white mb-0">Events</h2>
                     </div>
                     <div className="col">
                       <Nav className="justify-content-end" pills>
@@ -120,6 +120,7 @@ class Index extends React.Component {
                   <div className="chart">
                     <Line
                       data={chartExample1[this.state.chartExample1Data]}
+                      aux={chartExample1[this.state.chartExample1Data]}
                       options={chartExample1.options}
                       getDatasetAtEvent={e => console.log(e)}
                     />
@@ -135,7 +136,7 @@ class Index extends React.Component {
                       <h6 className="text-uppercase text-muted ls-1 mb-1">
                         Performance
                       </h6>
-                      <h2 className="mb-0">events by Discticts</h2>
+                      <h2 className="mb-0">Events by Discticts</h2>
                     </div>
                   </Row>
                 </CardHeader>
