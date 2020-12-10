@@ -13,7 +13,7 @@
 $ pip3 install -r requirements.txt 
 ```  
 ### Node JS
-Install Node.js 12.6.1 (https://nodejs.org/en/blog/release/v12.16.1/) then run:
+Install Node.js 12.19.0 (https://nodejs.org/en/download/releases/) then run:
 ```console
 $ npm rebuild node-sass
 ```
