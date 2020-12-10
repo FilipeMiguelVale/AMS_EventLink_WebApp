@@ -80,6 +80,8 @@ class Create_event extends React.Component {
             sound: false,
             light: false,
             video: false,
+            space:false,
+            catering:false,
 
 
         }
@@ -379,6 +381,26 @@ class Create_event extends React.Component {
                                                         <input type="checkbox"
                                                                name="video"
                                                                value={this.state.video}
+                                                               onChange={this.handleChange}/>
+                                                        <span className="custom-toggle-slider rounded-circle"/>
+                                                    </label>
+                                                </Col>
+                                                <Col lg="2">
+                                                    <h5 className="form-control-label">Space: </h5>
+                                                    <label className="custom-toggle">
+                                                        <input type="checkbox"
+                                                               name="space"
+                                                               value={this.state.space}
+                                                               onChange={this.handleChange}/>
+                                                        <span className="custom-toggle-slider rounded-circle"/>
+                                                    </label>
+                                                </Col>
+                                                <Col lg="2">
+                                                    <h5 className="form-control-label">Catering: </h5>
+                                                    <label className="custom-toggle">
+                                                        <input type="checkbox"
+                                                               name="catering"
+                                                               value={this.state.catering}
                                                                onChange={this.handleChange}/>
                                                         <span className="custom-toggle-slider rounded-circle"/>
                                                     </label>
