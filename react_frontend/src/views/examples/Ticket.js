@@ -378,7 +378,7 @@ class Ticket extends React.Component {
                                                         </DropdownToggle>
                                                         <DropdownMenu right>
                                                             <DropdownItem
-                                                                onClick={(e) => this.changeValueDrop1(e, 1)}>Budget</DropdownItem>
+                                                                onClick={(e) => this.changeValueDrop1(e, 1)}>Price</DropdownItem>
                                                             <DropdownItem
                                                                 onClick={(e) => this.changeValueDrop1(e, 2)}>Date/Hour</DropdownItem>
                                                             <DropdownItem
@@ -460,7 +460,7 @@ class Ticket extends React.Component {
                                                         </DropdownToggle>
                                                         <DropdownMenu right>
                                                             <DropdownItem
-                                                                onClick={(e) => this.changeValueDrop1(e, 1)}>Budget</DropdownItem>
+                                                                onClick={(e) => this.changeValueDrop1(e, 1)}>Price</DropdownItem>
                                                             <DropdownItem
                                                                 onClick={(e) => this.changeValueDrop1(e, 2)}>Date/Hour</DropdownItem>
                                                             <DropdownItem
