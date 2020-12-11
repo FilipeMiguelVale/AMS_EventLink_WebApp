@@ -28,8 +28,13 @@ inventory = [{"name":"Case beams","in_house":2,"out_house":8,"last_mod":"2020-12
                     {"name":"dmx cable 15m","in_house":5,"out_house":10,"last_mod":"2020-12-07 18:47","price_each":12},
                     {"name":"mic shure sm58 beta A","in_house":10,"out_house":5,"last_mod":"2020-12-07 18:47","price_each":255}]
 
-events = [{"name":"Evento1","date":"2020-12-07 18:00","address":"University of Aveiro","staff":"Filipe","services":"Space, sound, light",
-           "material":" 10 Beams 7r, 20 wash","budget":"4500","ticketline":"98","status":"ready", "email":"teste@teste.com"}]
+events = [{'name': 'Festival Aveiro é Nosso', 'last_promotor_name': 'AAUAv', 'about': 'UM festival Unico', 'address': 'UA',
+           'start_date': '2020-10-12','start_time': '10:30', 'end_date': '2020-12-12', 'end_time': '06:00', 'country': 'Portugal',
+           'postal_code': '', 'profession': 'Dev', 'telephone': '965717720', 'work_institution': 'AAUAv', 'city': 'Aveiro',
+           'promotor_name': 'AAUAv', 'vat': '501618970', 'dropDown1Value': 'Festival', 'dropDown2Value': '-', 'dropDown3Value': '-',
+           'ticketline': 98, 'sound': True, 'light': True, 'video': True, 'space': True, 'catering': True,
+           'date': '2020-10-12 10:30', 'staff': 'No Staff Assigned', 'email': 'admin@admin.com', 'services': 'Sound Light Video Space Catering '}
+]
 
 @app.route('/login/request', methods=['POST'])
 def login():
