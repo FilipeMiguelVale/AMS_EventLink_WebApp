@@ -110,7 +110,7 @@ class AdminNavbar extends React.Component {
                     <span className="avatar avatar-sm rounded-circle">
                       <img
                         alt="..."
-                        src={require("assets/img/theme/administrative1.png")}
+                        src={require("assets/img/theme/user.png")}
                       />
                     </span>
                     <Media className="ml-2 d-none d-lg-block">
@@ -128,17 +128,9 @@ class AdminNavbar extends React.Component {
                     <i className="ni ni-single-02" />
                     <span>My profile</span>
                   </DropdownItem>
-                  <DropdownItem to="/admin/user-profile" tag={Link}>
+                  <DropdownItem to="/admin/edit_profile" tag={Link}>
                     <i className="ni ni-settings-gear-65" />
                     <span>Settings</span>
-                  </DropdownItem>
-                  <DropdownItem to="/admin/user-profile" tag={Link}>
-                    <i className="ni ni-calendar-grid-58" />
-                    <span>Activity</span>
-                  </DropdownItem>
-                  <DropdownItem to="/admin/user-profile" tag={Link}>
-                    <i className="ni ni-support-16" />
-                    <span>Support</span>
                   </DropdownItem>
                   <DropdownItem divider />
                   <DropdownItem to="/auth/login" tag={Link}>>
