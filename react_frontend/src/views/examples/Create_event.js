@@ -32,10 +32,7 @@ import {
     Form,
     FormGroup,
     Input,
-    Row,
-    InputGroupAddon,
-    InputGroupText,
-    InputGroup
+    Row
 } from "reactstrap";
 // core components
 import UserHeader from "../../components/Headers/UserHeader.js";
@@ -85,7 +82,7 @@ class Create_event extends React.Component {
             video: false,
             space: false,
             catering: false,
-            ticketprice: "",
+            ticket_price: "",
             ticket_lotation: ""
 
 
@@ -141,7 +138,7 @@ class Create_event extends React.Component {
                 video: this.state.video,
                 space: this.state.space,
                 catering: this.state.catering,
-                ticketprice: this.state.ticketprice,
+                ticket_price: this.state.ticket_price,
                 ticket_lotation: this.state.ticket_lotation
             }),
         }).then(res => res.json())
@@ -228,6 +225,7 @@ class Create_event extends React.Component {
                                                             placeholder="Event Name"
                                                             type="text"
                                                             name="name"
+                                                            required
                                                             value={this.state.name}
                                                             onChange={this.handleChange}
                                                         />
@@ -447,7 +445,7 @@ class Create_event extends React.Component {
                                                             type="number"
                                                             value={this.state.ticket_price}
                                                             onChange={this.handleChange}
-                                                        >€</Input>
+                                                        />
                                                     </FormGroup>
                                                 </Col>
                                                 <Col lg="4">
@@ -459,22 +457,24 @@ class Create_event extends React.Component {
                                                         >
                                                             Tickets Available
                                                         </label>
-                                                        <InputGroup className="form-control-alternative">
-                                                            <Input
-                                                                className="form-control-alternative"
-                                                                id="input-promotor_name"
-                                                                name="ticket_lotation"
-                                                                placeholder="Tickets Available"
-                                                                type="number"
-                                                                value={this.state.ticket_lotation}
-                                                                onChange={this.handleChange}
-                                                            />
-                                                            <InputGroupAddon addonType="append" className="form-control-alternative">
-                                                                <InputGroupText className="form-control-alternative" >
-                                                                    <i className="fas fa-euro-sign"/>
-                                                                </InputGroupText>
-                                                            </InputGroupAddon>
-                                                        </InputGroup>
+                                                        <Input
+                                                            className="form-control-alternative"
+                                                            id="input-promotor_name"
+                                                            name="ticket_lotation"
+                                                            placeholder="Tickets Available"
+                                                            type="number"
+                                                            value={this.state.ticket_lotation}
+                                                            onChange={this.handleChange}
+                                                            startAdornment={
+                                                                <i className="fas fa-euro-sign"/>
+                                                            }
+                                                        />
+                                                        {/*<InputGroupAddon addonType="append"*/}
+                                                        {/*                 className="form-control-alternative">*/}
+                                                        {/*    <InputGroupText className="form-control-alternative">*/}
+                                                        {/*        <i className="fas fa-euro-sign"/>*/}
+                                                        {/*    </InputGroupText>*/}
+                                                        {/*</InputGroupAddon>*/}
                                                     </FormGroup>
                                                 </Col>
                                             </Row>

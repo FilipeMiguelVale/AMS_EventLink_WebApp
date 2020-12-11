@@ -33,7 +33,9 @@ events = [{'name': 'Festival Aveiro é Nosso', 'last_promotor_name': 'AAUAv', 'a
            'postal_code': '', 'profession': 'Dev', 'telephone': '965717720', 'work_institution': 'AAUAv', 'city': 'Aveiro',
            'promotor_name': 'AAUAv', 'vat': '501618970', 'dropDown1Value': 'Festival', 'dropDown2Value': '-', 'dropDown3Value': '-',
            'ticketline': 98, 'sound': True, 'light': True, 'video': True, 'space': True, 'catering': True,
-           'date': '2020-10-12 10:30', 'staff': 'No Staff Assigned', 'email': 'admin@admin.com', 'services': 'Sound Light Video Space Catering '}
+           'date': '2020-10-12 10:30', 'staff': 'No Staff Assigned', 'email': 'admin@admin.com', 'services': 'Sound Light Video Space Catering '},
+{'name': 'Festival Aveiro', 'last_promotor_name': 'AAUAv', 'about': 'UM festival unico', 'address': 'UA', 'start_date': '2020-12-12', 'start_time': '22:30', 'end_date': '2020-12-12', 'end_time': '23:59', 'country': 'Portugal', 'postal_code': '6270', 'profession': '', 'telephone': '965717720', 'work_institution': '', 'city': 'Aveiro', 'promotor_name': 'AAUAv', 'vat': '501618970', 'dropDown1Value': 'Festival', 'dropDown2Value': '-', 'dropDown3Value': '-', 'ticketline': True, 'sound': True, 'light': True, 'video': True, 'space': True, 'catering': True, 'ticketprice': '', 'ticket_lotation': '500', 'date': '2020-12-12 22:30', 'staff': 'No Staff Assigned', 'email': 'teste@teste.com', 'services': 'Sound Light Video Space Catering '}
+
 ]
 
 @app.route('/login/request', methods=['POST'])
