@@ -230,7 +230,6 @@ class Ticket extends React.Component {
                 <th scope="row" style={{textAlign: "center"}}>
                     <Button
                         className="icon icon-shape border-default bg-blue text-white rounded-circle"
-                        href={`/#admin/Event_details/${value["id"]}`}
                         onClick={this.redirect_to_details.bind(this, value['id'])}
                     >
                         <i className="fas fa-ellipsis-h"/>
