@@ -33,6 +33,9 @@ import {
     FormGroup,
     Input,
     Row,
+    InputGroupAddon,
+    InputGroupText,
+    InputGroup
 } from "reactstrap";
 // core components
 import UserHeader from "../../components/Headers/UserHeader.js";
@@ -80,15 +83,17 @@ class Create_event extends React.Component {
             sound: false,
             light: false,
             video: false,
-            space:false,
-            catering:false,
+            space: false,
+            catering: false,
+            ticketprice: "",
+            ticket_lotation: ""
 
 
         }
         this.handleChange = this.handleChange.bind(this);
 
     }
-    
+
     handleChange(event) {
         const target = event.target;
         var value = target.value;
@@ -135,7 +140,9 @@ class Create_event extends React.Component {
                 light: this.state.light,
                 video: this.state.video,
                 space: this.state.space,
-                catering: this.state.catering
+                catering: this.state.catering,
+                ticketprice: this.state.ticketprice,
+                ticket_lotation: this.state.ticket_lotation
             }),
         }).then(res => res.json())
             .then(
@@ -419,6 +426,60 @@ class Create_event extends React.Component {
                                             </Row>
                                         </div>
                                         <hr className="my-4"/>
+                                        {/* Institution Info */}
+                                        {this.state.ticketline == true && (
+                                            <h6 className="heading-small text-muted mb-4">Ticketline</h6>)}
+                                        {this.state.ticketline == true && (<div className="pl-lg-4">
+                                            <Row>
+                                                <Col lg="4">
+                                                    <FormGroup>
+                                                        <label
+                                                            className="form-control-label"
+                                                            htmlFor="input-promotor_name"
+                                                        >
+                                                            Ticket Price
+                                                        </label>
+                                                        <Input
+                                                            className="form-control-alternative"
+                                                            id="input-promotor_name"
+                                                            name="ticket_price"
+                                                            placeholder="ticket_price"
+                                                            type="number"
+                                                            value={this.state.ticket_price}
+                                                            onChange={this.handleChange}
+                                                        >€</Input>
+                                                    </FormGroup>
+                                                </Col>
+                                                <Col lg="4">
+                                                    <FormGroup>
+
+                                                        <label
+                                                            className="form-control-label"
+                                                            htmlFor="input-promotor_name"
+                                                        >
+                                                            Tickets Available
+                                                        </label>
+                                                        <InputGroup className="form-control-alternative">
+                                                            <Input
+                                                                className="form-control-alternative"
+                                                                id="input-promotor_name"
+                                                                name="ticket_lotation"
+                                                                placeholder="Tickets Available"
+                                                                type="number"
+                                                                value={this.state.ticket_lotation}
+                                                                onChange={this.handleChange}
+                                                            />
+                                                            <InputGroupAddon addonType="append" className="form-control-alternative">
+                                                                <InputGroupText className="form-control-alternative" >
+                                                                    <i className="fas fa-euro-sign"/>
+                                                                </InputGroupText>
+                                                            </InputGroupAddon>
+                                                        </InputGroup>
+                                                    </FormGroup>
+                                                </Col>
+                                            </Row>
+                                        </div>)}
+                                        {this.state.ticketline == true && (<hr className="my-4"/>)}
                                         {/* Address */}
                                         <h6 className="heading-small text-muted mb-4">Contact information</h6>
                                         <div className="pl-lg-4">
@@ -559,51 +620,6 @@ class Create_event extends React.Component {
                                                             onChange={this.handleChange}
                                                             name="vat"
                                                             type="text"
-                                                        />
-                                                    </FormGroup>
-                                                </Col>
-                                            </Row>
-                                        </div>
-                                        <hr className="my-4"/>
-                                        {/* Institution Info */}
-                                        <h6 className="heading-small text-muted mb-4">Institution</h6>
-                                        <div className="pl-lg-4">
-                                            <Row>
-                                                <Col lg="6">
-                                                    <FormGroup>
-                                                        <label
-                                                            className="form-control-label"
-                                                            htmlFor="input-name"
-                                                        >
-                                                            Work Institution
-                                                        </label>
-                                                        <Input
-                                                            className="form-control-alternative"
-                                                            id="input-name"
-                                                            placeholder={this.state.work_institution}
-                                                            value={this.state.work_institution}
-                                                            onChange={this.handleChange}
-                                                            name="work_institution"
-                                                            type="text"
-                                                        />
-                                                    </FormGroup>
-                                                </Col>
-                                                <Col lg="6">
-                                                    <FormGroup>
-                                                        <label
-                                                            className="form-control-label"
-                                                            htmlFor="input-promotor_name"
-                                                        >
-                                                            Profession
-                                                        </label>
-                                                        <Input
-                                                            className="form-control-alternative"
-                                                            id="input-promotor_name"
-                                                            placeholder={this.state.profession}
-                                                            value={this.state.profession}
-                                                            onChange={this.handleChange}
-                                                            type="promotor_name"
-                                                            name="profession"
                                                         />
                                                     </FormGroup>
                                                 </Col>
