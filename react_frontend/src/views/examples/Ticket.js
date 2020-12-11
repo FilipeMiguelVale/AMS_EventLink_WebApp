@@ -213,7 +213,7 @@ class Ticket extends React.Component {
                 </th>
                 <th scope="row" style={{textAlign: "center"}}>
           <span className="mb-0 text-sm">
-            {value["budget"]}€
+            {value["ticket_price"]}€
           </span>
                 </th>
                 <th scope="row" style={{textAlign: "center"}}>

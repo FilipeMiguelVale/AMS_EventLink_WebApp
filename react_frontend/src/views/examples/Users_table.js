@@ -66,7 +66,6 @@ class Users_table extends React.Component {
       new_email:"",
       new_role:"",
       new_roleType:"",
-      new_city:""
     }
   }
 
@@ -111,7 +110,6 @@ class Users_table extends React.Component {
                 new_email:"",
                 new_role:"",
                 new_roleType:"",
-                new_city:""
               }
             )
             this.getData()
@@ -223,19 +221,6 @@ class Users_table extends React.Component {
           <span className="mb-0 text-sm">
               <Input
                       className="form-control-alternative"
-                      id="city"
-                      placeholder={value["city"]}
-                      type="text"
-                      name="city"
-                      value={value["city"]}
-                      onChange={(e) => this.handleChange2(e,index)}
-                    />
-          </span>
-                </th>
-                <th scope="row" style={{textAlign: "center"}}>
-          <span className="mb-0 text-sm">
-              <Input
-                      className="form-control-alternative"
                       id="role"
                       placeholder={value["role"]}
                       type="text"
@@ -311,11 +296,6 @@ class Users_table extends React.Component {
                 <th scope="row" style={{textAlign: "center"}}>
           <span className="mb-0 text-sm">
             {value["email"]}
-          </span>
-                </th>
-                <th scope="row" style={{textAlign: "center"}}>
-          <span className="mb-0 text-sm">
-            {value["city"]}
           </span>
                 </th>
                 <th scope="row" style={{textAlign: "center"}}>
@@ -557,7 +537,6 @@ class Users_table extends React.Component {
                       <th scope="col " style={{textAlign:"center"}}>ID</th>
                       <th scope="col"  style={{textAlign:"center"}}>Username</th>
                       <th scope="col" style={{textAlign:"center"}}>Email</th>
-                      <th scope="col" style={{textAlign:"center"}}>City</th>
                       <th scope="col" style={{textAlign:"center"}}>Role</th>
                       <th scope="col" style={{textAlign:"center"}}>Role ID</th>
                       <th scope="col" style={{textAlign:"center"}}>Last Login</th>
@@ -575,9 +554,6 @@ class Users_table extends React.Component {
                             </th>
                             <th scope = "row" style={{textAlign:"center"}}>
                                 <Input placeholder="email" type="email" name = "new_email" value = {this.state.new_email}  onChange={this.handleChange} autoComplete="new-password"/>
-                            </th>
-                            <th scope = "row" style={{textAlign:"center"}}>
-                               <Input placeholder="City" type="email" name = "new_city" value = {this.state.new_city}  onChange={this.handleChange} autoComplete="new-password"/>
                             </th>
                             <th scope = "row" style={{textAlign:"center"}}>
                                <Input placeholder="Role" type="email" name = "new_role" value = {this.state.new_role}  onChange={this.handleChange} autoComplete="new-password"/>

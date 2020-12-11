@@ -32,9 +32,14 @@ events = [{'name': 'Festival Aveiro é Nosso', 'last_promotor_name': 'AAUAv', 'a
            'start_date': '2020-10-12','start_time': '10:30', 'end_date': '2020-12-12', 'end_time': '06:00', 'country': 'Portugal',
            'postal_code': '', 'profession': 'Dev', 'telephone': '965717720', 'work_institution': 'AAUAv', 'city': 'Aveiro',
            'promotor_name': 'AAUAv', 'vat': '501618970', 'dropDown1Value': 'Festival', 'dropDown2Value': '-', 'dropDown3Value': '-',
-           'ticketline': 98, 'sound': True, 'light': True, 'video': True, 'space': True, 'catering': True,
+           'ticketline': True, 'sound': True, 'light': True, 'video': True, 'space': True, 'catering': True, 'ticket_price': '10', 'ticket_lotation': '500',
            'date': '2020-10-12 10:30', 'staff': 'No Staff Assigned', 'email': 'admin@admin.com', 'services': 'Sound Light Video Space Catering '},
-{'name': 'Festival Aveiro', 'last_promotor_name': 'AAUAv', 'about': 'UM festival unico', 'address': 'UA', 'start_date': '2020-12-12', 'start_time': '22:30', 'end_date': '2020-12-12', 'end_time': '23:59', 'country': 'Portugal', 'postal_code': '6270', 'profession': '', 'telephone': '965717720', 'work_institution': '', 'city': 'Aveiro', 'promotor_name': 'AAUAv', 'vat': '501618970', 'dropDown1Value': 'Festival', 'dropDown2Value': '-', 'dropDown3Value': '-', 'ticketline': True, 'sound': True, 'light': True, 'video': True, 'space': True, 'catering': True, 'ticketprice': '', 'ticket_lotation': '500', 'date': '2020-12-12 22:30', 'staff': 'No Staff Assigned', 'email': 'teste@teste.com', 'services': 'Sound Light Video Space Catering '}
+{'name': 'Festival Aveiro', 'last_promotor_name': 'AAUAv', 'about': 'UM festival unico', 'address': 'UA', 'start_date': '2020-12-12',
+ 'start_time': '22:30', 'end_date': '2020-12-12', 'end_time': '23:59', 'country': 'Portugal', 'postal_code': '6270', 'profession': '',
+ 'telephone': '965717720', 'work_institution': '', 'city': 'Aveiro', 'promotor_name': 'AAUAv', 'vat': '501618970', 'dropDown1Value': 'Festival',
+ 'dropDown2Value': '-', 'dropDown3Value': '-', 'ticketline': True, 'sound': True, 'light': True, 'video': True, 'space': True, 'catering': True,
+ 'ticket_price': '5', 'ticket_lotation': '500', 'date': '2020-12-12 22:30', 'staff': 'No Staff Assigned', 'email': 'teste@teste.com',
+ 'services': 'Sound Light Video Space Catering '}
 
 ]
 
@@ -107,8 +112,7 @@ def add_user():
     email = request.json['email']
     role = int(request.json['role'])
     role_type = request.json['role_type']
-    city= request.json['city']
-    user = User(email,role,role_type,city)
+    user = User(email,role,role_type,"Aveiro")
     if add_user_to_database(user):
         return jsonify({"response":"Done"})
     
