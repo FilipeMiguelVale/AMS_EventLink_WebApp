@@ -134,6 +134,8 @@ def register_user():
     username = request.json['username']
     email = request.json['email']
     password = request.json['password']
+    user = User(email, 1, "User", "Aveiro")
+    add_user_to_database(user)
     if register_user_to_database(username,email,password):
         login_user(can_login(email, password))
         user = get_user_by(email=email)
