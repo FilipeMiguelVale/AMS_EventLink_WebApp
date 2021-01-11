@@ -219,11 +219,11 @@ class Ticket extends React.Component {
                 <th scope="row" style={{textAlign: "center"}}>
                     <span className="mr-2">{value["damage"]}</span>
                     <div>
-                        {value["ticketline"]}%<br/>
+                        {value["ticket_sold"]/value["ticket_lotation"]*100}%<br/>
                         <Progress
                             max="100"
-                            value={value["ticketline"]}
-                            barClassName={this.getBarColor(value["ticketline"])}
+                            value={value["ticket_sold"]/value["ticket_lotation"]*100}
+                            barClassName={this.getBarColor(value["ticket_sold"]/value["ticket_lotation"]*100)}
                         />
                     </div>
                 </th>

@@ -28,19 +28,18 @@ inventory = [{"name":"Case beams","in_house":2,"out_house":8,"last_mod":"2020-12
                     {"name":"dmx cable 15m","in_house":5,"out_house":10,"last_mod":"2020-12-07 18:47","price_each":12},
                     {"name":"mic shure sm58 beta A","in_house":10,"out_house":5,"last_mod":"2020-12-07 18:47","price_each":255}]
 
-events = [{'name': 'Festival Aveiro é Nosso', 'last_promotor_name': 'AAUAv', 'about': 'UM festival Unico', 'address': 'UA',
+events = [{'id':1,'name': 'Festival Aveiro é Nosso', 'last_promotor_name': 'AAUAv', 'about': 'UM festival Unico', 'address': 'UA',
            'start_date': '2020-10-12','start_time': '10:30', 'end_date': '2020-12-12', 'end_time': '06:00', 'country': 'Portugal',
            'postal_code': '', 'profession': 'Dev', 'telephone': '965717720', 'work_institution': 'AAUAv', 'city': 'Aveiro',
            'promotor_name': 'AAUAv', 'vat': '501618970', 'dropDown1Value': 'Festival', 'dropDown2Value': '-', 'dropDown3Value': '-',
            'ticketline': True, 'sound': True, 'light': True, 'video': True, 'space': True, 'catering': True, 'ticket_price': '10', 'ticket_lotation': '500',
-           'date': '2020-10-12 10:30', 'staff': 'No Staff Assigned', 'email': 'admin@admin.com', 'services': 'Sound Light Video Space Catering '},
-{'name': 'Festival Aveiro', 'last_promotor_name': 'AAUAv', 'about': 'UM festival unico', 'address': 'UA', 'start_date': '2020-12-12',
+           'ticket_sold': '100','date': '2020-10-12 10:30', 'staff': 'No Staff Assigned', 'email': 'admin@admin.com', 'services': 'Sound Light Video Space Catering '},
+{'id':2,'name': 'Festival Aveiro', 'last_promotor_name': 'AAUAv', 'about': 'UM festival unico', 'address': 'UA', 'start_date': '2020-12-12',
  'start_time': '22:30', 'end_date': '2020-12-12', 'end_time': '23:59', 'country': 'Portugal', 'postal_code': '6270', 'profession': '',
  'telephone': '965717720', 'work_institution': '', 'city': 'Aveiro', 'promotor_name': 'AAUAv', 'vat': '501618970', 'dropDown1Value': 'Festival',
  'dropDown2Value': '-', 'dropDown3Value': '-', 'ticketline': True, 'sound': True, 'light': True, 'video': True, 'space': True, 'catering': True,
- 'ticket_price': '5', 'ticket_lotation': '500', 'date': '2020-12-12 22:30', 'staff': 'No Staff Assigned', 'email': 'teste@teste.com',
+ 'ticket_price': '50', 'ticket_lotation': '500','ticket_sold': '10', 'date': '2020-12-12 22:30', 'staff': 'No Staff Assigned', 'email': 'teste@teste.com',
  'services': 'Sound Light Video Space Catering '}
-
 ]
 
 @app.route('/login/request', methods=['POST'])
@@ -101,7 +100,8 @@ def add_event():
         request.json["services"] += "Catering "
     if not bool(request.json["ticketline"]):
         request.json["ticketline"] += "None"
-
+    request.json["id"]=len(events)+1
+    request.json['ticket_sold']=0
     print(request.json)
     events.append(request.json)
     return jsonify({"response":"Done"})
