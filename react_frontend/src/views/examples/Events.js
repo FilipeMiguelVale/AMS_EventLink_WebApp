@@ -226,11 +226,11 @@ class Events extends React.Component {
        <th scope = "row" style={{textAlign:"center"}}>
            <span className="mr-2">{value["damage"]}</span>
            <div>
-               {value["ticket_lotation"]}%<br/>
+               {Math.floor(value["ticket_sold"]/value["ticket_lotation"]*100)}%<br/>
                <Progress
                   max="100"
-                  value={value["ticket_lotation"]}
-                  barClassName={this.getBarColor(value["ticket_lotation"]/500)}
+                  value={Math.floor(value["ticket_sold"]/value["ticket_lotation"]*100)}
+                  barClassName={this.getBarColor(Math.floor(value["ticket_sold"]/value["ticket_lotation"]*100))}
                 />
             </div>
         </th>
