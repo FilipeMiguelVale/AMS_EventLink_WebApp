@@ -240,6 +240,7 @@ class Events extends React.Component {
         <th scope = "row" style={{textAlign:"center"}}>
             <Button
                 className="icon icon-shape bg-transparent border-default text-white rounded-circle"
+                href={`/#admin/event_details/${value["id"]}`}
                 onClick={this.redirect_to_details.bind(this,value['id'])}
             >
               <i className="fas fa-ellipsis-h"/>
