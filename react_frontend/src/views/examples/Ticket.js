@@ -180,6 +180,17 @@ class Ticket extends React.Component {
             return "bg-gradient-danger"
         }
     }
+    handleBuy(id) {
+        fetch('/buy_ticket/' + id, {method: 'POST'}).then(
+            response => response.json()
+        ).then(
+            result => {
+                console.log(result)
+                this.getData()
+            }
+        )
+
+    }
 
     handleDelete(id) {
         fetch('/delete_event/' + id, {method: 'POST'}).then(
@@ -237,7 +248,7 @@ class Ticket extends React.Component {
                     <Button
                         className="icon icon-shape border-default bg-green text-white "
                         type="button"
-                        onClick={(e) => this.handleDelete(value['id'])}
+                        onClick={(e) => this.handleBuy(value['id'])}
                     >
                         <i className="fas fa-shopping-cart"></i>
                     </Button>

@@ -171,7 +171,7 @@ def add_material():
 def buy_ticket(id):
     print(events[int(id) - 1])
     events[int(id)-1]["ticket_sold"]= int(events[int(id)-1]["ticket_sold"])+1
-    return ""
+    return jsonify({"response": "Done"})
 
 @app.route('/update_material/<id>', methods=['POST'])
 def update_material(id):
