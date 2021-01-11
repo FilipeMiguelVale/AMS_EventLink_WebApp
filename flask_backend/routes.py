@@ -167,6 +167,11 @@ def add_material():
     inventory.append({"name": name, "in_house": in_house, "out_house": out_house, "last_mod": last_mod, "price_each": price_each})
     return jsonify({"response": "Done"})
 
+@app.route('/buy_ticket/<id>', methods=['POST'])
+def buy_ticket(id):
+    events[int(id)]["tickets_sold"]+=1
+    print(events[int(id)])
+
 @app.route('/update_material/<id>', methods=['POST'])
 def update_material(id):
     print(request.json)
