@@ -169,8 +169,9 @@ def add_material():
 
 @app.route('/buy_ticket/<id>', methods=['POST'])
 def buy_ticket(id):
-    events[int(id)]["tickets_sold"]+=1
-    print(events[int(id)])
+    print(events[int(id) - 1])
+    events[int(id)-1]["ticket_sold"]= int(events[int(id)-1]["ticket_sold"])+1
+    return ""
 
 @app.route('/update_material/<id>', methods=['POST'])
 def update_material(id):
