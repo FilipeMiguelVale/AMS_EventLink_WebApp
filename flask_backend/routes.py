@@ -240,8 +240,9 @@ def update_user():
 @app.route('/delete_event/<id>', methods=['POST'])
 def delete_event(id):
     print("delete evnt:"+id)
-    delete_event_from_database(id)
-    rmMedia(id)
+    events.pop(int(id)-1)
+    # delete_event_from_database(id)
+    # rmMedia(id)
     return jsonify(
         {"succes": True }
     )
