@@ -100,7 +100,6 @@ class Ticket extends React.Component {
             const response1 = await fetch(
                 `/range_events?id=${id}&filter=${this.state.dropdownIndex}&quantity=${this.state.dropdownIndex2}&order=${this.state.dropdownIndex3}`
             );
-
             const result1 = await response1.json();
             if (result1.length == 0)
                 this.setState(
@@ -230,11 +229,11 @@ class Ticket extends React.Component {
                 <th scope="row" style={{textAlign: "center"}}>
                     <span className="mr-2">{value["damage"]}</span>
                     <div>
-                        {value["ticket_sold"]/value["ticket_lotation"]*100}%<br/>
+                        {Math.floor(value["ticket_sold"]/value["ticket_lotation"]*100)}%<br/>
                         <Progress
                             max="100"
-                            value={value["ticket_sold"]/value["ticket_lotation"]*100}
-                            barClassName={this.getBarColor(value["ticket_sold"]/value["ticket_lotation"]*100)}
+                            value={Math.floor(value["ticket_sold"]/value["ticket_lotation"]*100)}
+                            barClassName={this.getBarColor(Math.floor(value["ticket_sold"]/value["ticket_lotation"]*100))}
                         />
                     </div>
                 </th>
