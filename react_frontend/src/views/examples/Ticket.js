@@ -179,6 +179,7 @@ class Ticket extends React.Component {
             return "bg-gradient-danger"
         }
     }
+
     handleBuy(id) {
         fetch('/buy_ticket/' + id, {method: 'POST'}).then(
             response => response.json()
@@ -247,7 +248,7 @@ class Ticket extends React.Component {
                     <Button
                         className="icon icon-shape border-default bg-green text-white "
                         type="button"
-                        onClick={(e) => this.handleBuy(value['id'])}
+                        onClick={(e) => {this.handleBuy(value['id']); alert("You have successfully bought ticket number: " + value["ticket_sold"]);}}
                     >
                         <i className="fas fa-shopping-cart"></i>
                     </Button>
