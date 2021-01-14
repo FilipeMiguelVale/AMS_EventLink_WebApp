@@ -28,18 +28,20 @@ inventory = [{"name":"Case beams","in_house":2,"out_house":8,"last_mod":"2020-12
                     {"name":"dmx cable 15m","in_house":5,"out_house":10,"last_mod":"2020-12-07 18:47","price_each":12},
                     {"name":"mic shure sm58 beta A","in_house":10,"out_house":5,"last_mod":"2020-12-07 18:47","price_each":255}]
 
-events = [{'id':1,'name': 'Festival Aveiro é Nosso', 'last_promotor_name': 'AAUAv', 'about': 'UM festival Unico', 'address': 'UA',
-           'start_date': '2020-10-12','start_time': '10:30', 'end_date': '2020-12-12', 'end_time': '06:00', 'country': 'Portugal',
-           'postal_code': '', 'profession': 'Dev', 'telephone': '965717720', 'work_institution': 'AAUAv', 'city': 'Aveiro',
-           'promotor_name': 'AAUAv', 'vat': '501618970', 'dropDown1Value': 'Festival', 'dropDown2Value': '-', 'dropDown3Value': '-',
-           'ticketline': True, 'sound': True, 'light': True, 'video': True, 'space': True, 'catering': True, 'ticket_price': '10', 'ticket_lotation': '500',
-           'ticket_sold': '100','date': '2020-10-12 10:30', 'staff': 'No Staff Assigned', 'email': 'admin@admin.com', 'services': 'Sound Light Video Space Catering '},
+events = [
+{'id':1,'name': 'Festival Aveiro é Nosso', 'last_promotor_name': 'AAUAv', 'about': 'UM festival Unico', 'address': 'UA',
+ 'start_date': '2020-10-12','start_time': '10:30', 'end_date': '2020-12-12', 'end_time': '06:00', 'country': 'Portugal',
+ 'postal_code': '', 'profession': 'Dev', 'telephone': '965717720', 'work_institution': 'AAUAv', 'city': 'Aveiro',
+ 'promotor_name': 'AAUAv', 'vat': '501618970', 'dropDown1Value': 'Festival', 'dropDown2Value': '-', 'dropDown3Value': '-',
+ 'services':['light', 'video', 'space', 'catering'], 'ticketline': True, 'ticket_price': '10', 'ticket_lotation': '500',
+ 'ticket_sold': '100','date': '2020-10-12 10:30', 'staff': 'No Staff Assigned', 'email': 'admin@admin.com',
+ 'services':['light', 'video', 'space', 'catering'],"budget":None},
 {'id':2,'name': 'Festival Aveiro', 'last_promotor_name': 'AAUAv', 'about': 'UM festival unico', 'address': 'UA', 'start_date': '2020-12-12',
  'start_time': '22:30', 'end_date': '2020-12-12', 'end_time': '23:59', 'country': 'Portugal', 'postal_code': '6270', 'profession': '',
  'telephone': '965717720', 'work_institution': '', 'city': 'Aveiro', 'promotor_name': 'AAUAv', 'vat': '501618970', 'dropDown1Value': 'Festival',
- 'dropDown2Value': '-', 'dropDown3Value': '-', 'ticketline': True, 'sound': True, 'light': True, 'video': True, 'space': True, 'catering': True,
- 'ticket_price': '50', 'ticket_lotation': '500','ticket_sold': '10', 'date': '2020-12-12 22:30', 'staff': 'No Staff Assigned', 'email': 'teste@teste.com',
- 'services': 'Sound Light Video Space Catering '}
+ 'dropDown2Value': '-', 'dropDown3Value': '-', 'ticketline': True,'ticket_price': '50', 'ticket_lotation': '500',
+ 'ticket_sold': '10', 'date': '2020-12-12 22:30', 'staff': 'No Staff Assigned', 'email': 'teste@teste.com',
+ 'services':['light', 'video', 'space'],"budget":"15000"}
 ]
 
 @app.route('/login/request', methods=['POST'])
@@ -87,21 +89,22 @@ def add_event():
     request.json["date"]=request.json["start_date"] + " " + request.json["start_time"]
     request.json["staff"]="No Staff Assigned"
     request.json["email"]=current_user.email
-    request.json["services"]=""
+    request.json["services"]=[]
     if bool(request.json["sound"]):
-        request.json["services"]+="Sound "
+        request.json["services"]+=[" Sound"]
     if bool(request.json["light"]):
-        request.json["services"]+="Light "
+        request.json["services"]+=[" Light"]
     if bool(request.json["video"]):
-        request.json["services"]+="Video "
+        request.json["services"]+=[" Video"]
     if bool(request.json["space"]):
-        request.json["services"]+="Space "
+        request.json["services"]+=[" Space"]
     if bool(request.json["catering"]):
-        request.json["services"] += "Catering "
+        request.json["services"] +=[" Catering "]
     if not bool(request.json["ticketline"]):
-        request.json["ticketline"] += "None"
+        request.json["ticketline"] = "None"
     request.json["id"]=len(events)+1
     request.json['ticket_sold']=0
+    request.json['budget']=None
     print(request.json)
     events.append(request.json)
     return jsonify({"response":"Done"})
@@ -250,7 +253,14 @@ def delete_event(id):
 # See event
 @app.route('/event/<id>', methods=['GET'])
 def get_event(id):
-    return get_event_by(id, filter="id")
+    return jsonify(events[int(id)-1])
+
+@app.route('/set_budget/<id>',methods=['POST'])
+def set_budget(id):
+    budget = int(request.json['budget'])
+    print(budget)
+    events[int(id)-1]["budget"]=budget
+    return {"response":"Done"}
 
 @app.route('/event_status/<id>',methods=['GET'])
 def get_event_status(id):
@@ -319,6 +329,7 @@ def get_media_photos_id(path_to_file):
 
 @app.route('/Nmedia/<path:path_to_file>')
 def get_num_photos(path_to_file):
+    return "-1"
     txt_or_csv = [f for f in os.listdir(os.path.join(app.config['UPLOAD_FOLDER'],path_to_file)) if re.search(r'.*\.(jpeg)$', f)]
     return str(len(txt_or_csv))
 

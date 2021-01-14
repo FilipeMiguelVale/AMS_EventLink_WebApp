@@ -215,7 +215,7 @@ class Events extends React.Component {
         </th>
         <th scope = "row" style={{textAlign:"center"}}>
           <span className="mb-0 text-sm">
-            {value["services"]}
+            {value["services"].toString()}
           </span>
         </th>
         <th scope = "row" style={{textAlign:"center"}}>
@@ -224,7 +224,7 @@ class Events extends React.Component {
           </span>
         </th>
        <th scope = "row" style={{textAlign:"center"}}>
-           <span className="mr-2">{value["damage"]}</span>
+           {value["ticketline"]!="None"&&(
            <div>
                {Math.floor(value["ticket_sold"]/value["ticket_lotation"]*100)}%<br/>
                <Progress
@@ -232,7 +232,11 @@ class Events extends React.Component {
                   value={Math.floor(value["ticket_sold"]/value["ticket_lotation"]*100)}
                   barClassName={this.getBarColor(Math.floor(value["ticket_sold"]/value["ticket_lotation"]*100))}
                 />
-            </div>
+            </div>)}
+            {value["ticketline"]=="None"&&(
+           <div>
+               No Ticketline
+            </div>)}
         </th>
         <th scope = "row" style={{textAlign:"center"}}>
             {this.setStatus(value["status"])}

@@ -33,7 +33,7 @@ import {
   ButtonDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem, Badge
+  DropdownItem, Badge, Input
 } from "reactstrap";
 // core components
 import Header from "../../components/Headers/Header.js";
@@ -58,6 +58,9 @@ class EventDetails extends React.Component {
 
     this.toggle = this.toggle.bind(this);
     this.changeValue = this.changeValue.bind(this);
+    this.handleChange2 = this.handleChange2.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.setEditMode=this.setEditMode.bind(this)
 
     this.state = {
       showIndex: false,
@@ -77,20 +80,11 @@ class EventDetails extends React.Component {
       showVideo: {},
       video_total:0,
       photos_total:0,
-      event_data: {
-        car: [],
-        location: {
-          address: " ",
-          coords: {lat: 40, lng: 30 },
-        },
-        damage: 0.0,
-        date: " ",
-        n_cars_involved: 0,
-        n_people_involved: 0,
-        n_people_injured: 0, 
-      },
+      event_data: {"services":[]},
       dropDownValue: 0,
       dropDownOpen: false,
+      user_role:2,
+      edit_mode:false
     };
     this.numImg=0
     this.images = [
@@ -123,6 +117,15 @@ class EventDetails extends React.Component {
     ]
   }
 
+  handleChange2(event,id) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+    this.state.event_data[id]=value
+    this.setState({
+      //table_data[0]=value
+    });
+  }
 
   get_data = async (id) => {
     const response = await fetch(
@@ -130,27 +133,23 @@ class EventDetails extends React.Component {
     const result = await response.json();
     this.setState(prevState => (
       {
-        event_data:  {
-          car: result['cars'],
-          location: 
-          {
-            address: result['location']['address'],
-            coords: {lat: result['location']['lat'],lng: result['location']['lng']}
-          },
-          damage: result['damage'],
-          date: fix_date(result['date']),
-          n_cars_involved: result['n_cars_involved'],
-          n_people_involved: result['n_people'],
-          n_people_injured: parseInt(result['n_people_injured']),
-          status: result['status']
-        },
-        video_total:parseInt(result['video_total']),
-        dropDownValue: this.init_text_dropdown(parseInt(result['status']))
+        event_data: result
       }
     ));
     const resp =await fetch(
       `/Nmedia/${id}/photos`);
     const res = await resp.json();
+    const req = await fetch(
+              '/home'
+          );
+    const respo = await req.json()
+          this.setState(
+              prevState => (
+                  {
+                      user_role:respo["role"]
+                  }
+              )
+          );
     this.numImg = parseInt(res)
     const media=[]
     if (this.state.video_total >0){
@@ -168,12 +167,12 @@ class EventDetails extends React.Component {
         original: `/media/novideo.png`
       })
     }
-    for (let i = 0; i < this.numImg; i++) {
-      media.push({
-        thumbnail: `/media/${id}/photos/${i}.jpeg`,
-        original: `/media/${id}/photos/${i}.jpeg`
-      })
-    }
+    // for (let i = 0; i < this.numImg; i++) {
+    //   media.push({
+    //     thumbnail: `/media/${id}/photos/${i}.jpeg`,
+    //     original: `/media/${id}/photos/${i}.jpeg`
+    //   })
+    // }
 
     this.setState(prevState => (
         this.images= media
@@ -185,7 +184,7 @@ class EventDetails extends React.Component {
   componentDidMount() {
     let id = this.props.match.params['id']
     this.get_data(id)
-    this.timer = setInterval(() => this.get_data(id),5000)
+    // this.timer = setInterval(() => this.get_data(id),5000)
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -197,12 +196,43 @@ class EventDetails extends React.Component {
     };
   }
 
+  handleSubmit(event,id) {
+    event.preventDefault();
+    fetch('/set_budget/'+id, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      budget:this.state.event_data["budget"]
+    }),
+    }).then(res => res.json())
+      .then(
+        (result) => {
+          console.log(result['response'])
+          if(result['response']=="Done"){
+            this.setState({
+            edit_mode:false
+            });
+            this.getData()
+          }
+          else{
+            this.setState({ error: result['error'] });
+          }
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error: "error"
+          });
+        }
+      )
+  }
+
   componentWillUnmount(){
     clearInterval(this.timer)
     this.timer = null
   }
 
-  renderCars = (value,index) => {
+  renderServices = (value,index) => {
     return(
       <CardBody className="border rounded">
         <CardTitle
@@ -214,27 +244,27 @@ class EventDetails extends React.Component {
         <CardBody className="align-content-center">
           <Row>
             <span className="font-weight-bold">Activated ABS</span>
-            <span>: {String(value['ABS'])}</span>
+            {/*<span>: {String(value['ABS'])}</span>*/}
           </Row>
           <Row>
             <span className="font-weight-bold">Fired Airbag</span>
-            <span>: {String(value['airbag'])}</span>
+            {/*<span>: {String(value['airbag'])}</span>*/}
           </Row>
           <Row>
             <span className="font-weight-bold">Passengers</span>
-            <span>: {value['n_people']} </span>
+            {/*<span>: {value['n_people']} </span>*/}
           </Row>
           <Row>
             <span className="font-weight-bold">Overturned</span>
-            <span>: {String(value['overturned'])}</span>
+            {/*<span>: {String(value['overturned'])}</span>*/}
           </Row>
           <Row>
             <span className="font-weight-bold">Temperature</span>
-            <span>: {value['temperature']}</span>
+            {/*<span>: {value['temperature']}</span>*/}
           </Row>
           <Row>
             <span className="font-weight-bold">Collision velocity</span>
-            <span>: {value['velocity']}</span>
+            {/*<span>: {value['velocity']}</span>*/}
           </Row>
         </CardBody>
       </CardBody>
@@ -430,6 +460,19 @@ class EventDetails extends React.Component {
     }
   };
 
+  setEditMode(){
+    console.log(this.state.edit_mode)
+      this.state.edit_mode=!this.state.edit_mode
+
+    console.log(this.state.edit_mode)
+    this.setState(
+                  prevState => (
+                      {
+                      }
+                  )
+              );
+  }
+
   set_injured(id,value){
       fetch(`/set_event_injured/${id}`,{
         method: 'POST',
@@ -459,7 +502,7 @@ class EventDetails extends React.Component {
                         >
                           <i className="fas fa-angle-left"/>
                         </Button>
-                        <h2 className=" mt-2 ml-4 ">Event Details</h2>
+                        <h2 className=" mt-2 ml-4 ">{this.state.event_data["name"]}</h2>
                       </div>
                     </Col>
                     <Col>
@@ -467,18 +510,18 @@ class EventDetails extends React.Component {
                         <div className="mr-2">
                           {this.setStatusColor()}
                         </div>
-                        <div className="mr-2 ">
-                          <ButtonDropdown className="dropdown-width" isOpen={this.state.dropDownOpen} toggle={this.toggle}>
-                            <DropdownToggle caret>
-                              {this.state.dropDownValue}
-                            </DropdownToggle>
-                            <DropdownMenu right>
-                              <DropdownItem onClick={this.changeValue}>event still not answered</DropdownItem>
-                              <DropdownItem onClick={this.changeValue}>Emergency services are on their way</DropdownItem>
-                              <DropdownItem onClick={this.changeValue}>event resolved</DropdownItem>
-                            </DropdownMenu>
-                          </ButtonDropdown>
-                        </div>
+                        {/*<div className="mr-2 ">*/}
+                        {/*  <ButtonDropdown className="dropdown-width" isOpen={this.state.dropDownOpen} toggle={this.toggle}>*/}
+                        {/*    <DropdownToggle caret>*/}
+                        {/*      {this.state.dropDownValue}*/}
+                        {/*    </DropdownToggle>*/}
+                        {/*    <DropdownMenu right>*/}
+                        {/*      <DropdownItem onClick={this.changeValue}>event still not answered</DropdownItem>*/}
+                        {/*      <DropdownItem onClick={this.changeValue}>Emergency services are on their way</DropdownItem>*/}
+                        {/*      <DropdownItem onClick={this.changeValue}>event resolved</DropdownItem>*/}
+                        {/*    </DropdownMenu>*/}
+                        {/*  </ButtonDropdown>*/}
+                        {/*</div>*/}
                       </div>
                     </Col>
                   </Row>
@@ -488,20 +531,20 @@ class EventDetails extends React.Component {
                     <Col>
                       <Row >
                         <div className="col">
-                          <img src={require("../../assets/img/brand/event.png")} style={{height:"100%",width:"100%"}} />
+                          {/*<img src={require("../../assets/img/brand/event.png")} style={{height:"100%",width:"100%"}} />*/}
                         </div>
                       </Row>
                       <Row>
                         <div className="col">
-                          <p><strong>Address:</strong> {this.state.event_data.location.address}</p>
+                          <p><strong>Address:</strong> {this.state.event_data.address}</p>
                         </div>
                       </Row>
                       <Row>
                         <div className="col-sm">
-                          <p><strong>Lat:</strong> {this.state.event_data.location.coords.lat}</p>
+                          <p><strong>City</strong> {this.state.event_data.city}</p>
                         </div>
                         <div className="col-sm">
-                          <p><strong>Lng:</strong> {this.state.event_data.location.coords.lng}</p>
+                          <p><strong>Promotor Name</strong> {this.state.event_data.promotor_name }</p>
                         </div>
                       </Row>
                     </Col>
@@ -534,32 +577,31 @@ class EventDetails extends React.Component {
                       </CardBody>
                     </Col>
                   </Row>
-                  <Maps
-                        markers = {[{id: this.props.match.params['id'],
-                                    lat: this.state.event_data.location.coords.lat,
-                                    lng: this.state.event_data.location.coords.lng,
-                                    status: this.state.event_data.status}]}
-                        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4aWR3SBGaa1oB0CuDf2vptnJfSMSguZU"
-                        loadingElement={<div style={{ height: `100%` }} />}
-                        center = {this.state.event_data.location.coords}
-                        zoom = {17}
+                  {/*<Maps*/}
+                  {/*      // markers = {[{id: this.props.match.params['id'],*/}
+                  {/*      //             lat: this.state.event_data.location.coords.lat,*/}
+                  {/*      //             lng: this.state.event_data.location.coords.lng,*/}
+                  {/*      //             status: this.state.event_data.status}]}*/}
+                  {/*      googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4aWR3SBGaa1oB0CuDf2vptnJfSMSguZU"*/}
+                  {/*      loadingElement={<div style={{ height: `100%` }} />}*/}
+                  {/*      // center = {this.state.event_data.location.coords}*/}
+                  {/*      zoom = {17}*/}
 
-                        containerElement={
-                          <div
-                            className="map-canvas"
-                            id="map-canvas"
-                          />
-                        }
-                        mapElement={
-                          <div style={{ height: `100%`, borderRadius: "inherit" }} />
-                        }
-
-                      />
+                  {/*      containerElement={*/}
+                  {/*        <div*/}
+                  {/*          className="map-canvas"*/}
+                  {/*          id="map-canvas"*/}
+                  {/*        />*/}
+                  {/*      }*/}
+                  {/*      mapElement={*/}
+                  {/*        <div style={{ height: `100%`, borderRadius: "inherit" }} />*/}
+                  {/*      }*/}
+                  {/*    />*/}
                   <CardHeader>
                     <h3> MORE DETAILS... </h3>
                   </CardHeader>
 					<Row>
-                     <Col lg="6" xl="3">
+                     <Col md="1" lg="6" xl="3">
                         <Card className="card-stats mb-4 mb-xl-0">
                           <CardBody className="border rounded border-info">
                               <Row>
@@ -568,20 +610,20 @@ class EventDetails extends React.Component {
                                     tag="h5"
                                     className="text-uppercase text-muted mb-0"
                                   >
-                                    Number of cars involved
+                                    Services
                                   </CardTitle>
-                                  <span className="h2 font-weight-bold mb-0">{this.state.event_data.n_cars_involved}</span>
+                                  <span className="h2 font-weight-bold mb-0">{this.state.event_data["services"].length}</span>
                                 </div>
                                   <Col className="col-auto">
                                     <Button className="icon icon-shape bg-success text-dark rounded-circle shadow" id="toggler">
-                                      <i className="fas fa-car"/>
+                                      <i className="fas fa-users-cog"/>
                                     </Button>
                                   </Col>
                               </Row>
                           </CardBody>
                         </Card>
                       </Col>
-                      <Col lg="6" xl="3">
+                     <Col md="3" lg="6" xl="3">
                         <Card className="card-stats mb-4 mb-xl-0">
                           <CardBody className="border rounded border-info">
 
@@ -591,10 +633,10 @@ class EventDetails extends React.Component {
                                     tag="h5"
                                     className="text-uppercase text-muted mb-0"
                                   >
-                                    Number of persons involved
+                                    STAFF
                                   </CardTitle>
                                   <span className="h2 font-weight-bold mb-0">
-                                    {this.state.event_data.n_people_involved}
+                                    {this.state.event_data["staff"]}
                                   </span>
                                 </div>
                                 <Col className="col-auto">
@@ -607,7 +649,7 @@ class EventDetails extends React.Component {
                           </CardBody>
                         </Card>
                       </Col>
-                      <Col lg="6" xl="3">
+                     <Col md="5" lg="6" xl="3">
                         <Card className="card-stats mb-4 mb-xl-0">
                           <CardBody className="border rounded border-info">
                             <Row>
@@ -616,30 +658,55 @@ class EventDetails extends React.Component {
                                   tag="h5"
                                   className="text-uppercase text-muted mb-0"
                                 >
-                                  Number of persons injured
+                                  Budget
                                 </CardTitle>
-
-                                <span className="h2 font-weight-bold mb-0">
-                                  <Button className=" icon-sm icon-shapesm bg-warning text-dark shadow" onClick={(e)=>this.handleClick(e,this.props.match.params['id'],-1)}>
-                                      <i className="fas fa-minus"/>
-                                </Button>
-                                  {this.state.event_data.n_people_injured}
-                                  <Button className=" icon-sm icon-shapesm bg-success text-dark shadow"onClick={(e)=>this.handleClick(e,this.props.match.params['id'],1)}>
-                                      <i className="fas fa-plus"/>
-                                </Button>
-                                </span>
-
+                                  {this.state.user_role==0 && this.state.edit_mode &&(
+                                  <Input
+                                    className="form-control-alternative"
+                                    id="input-budget"
+                                    placeholder={this.state.event_data["budget"]}
+                                    type="number"
+                                    name="budget"
+                                    value={this.state.event_data["budget"]}
+                                    onChange={(e) => this.handleChange2(e,"budget")}
+                                  />
+                                    )}
+                                    {this.state.user_role==0 && this.state.edit_mode && (
+                                  <Button
+                                      className="icon icon-shape bg-success text-white rounded-circle"
+                                      type="button"
+                                      onClick={(e) => this.handleSubmit(e,this.state.event_data["id"])}
+                                  >
+                                      <i className="fas fa-check"></i>
+                                  </Button>
+                                    )}
+                                    {(this.state.user_role!=0 || this.state.edit_mode==false) && (
+                                  <span className="h2 font-weight-bold mb-0">
+                                    {this.state.event_data["budget"]}€
+                                  </span>
+                                    )}
                               </div>
                               <Col className="col-auto">
+                                {this.state.user_role==0 && (
+                                  <Button
+                                      className="icon icon-shape bg-danger text-dark rounded-circle shadow"
+                                      type="button"
+                                      onClick={(e) => this.setEditMode()}
+                                  >
+                                      <i className="fas fa-file-invoice-dollar"/>
+                                  </Button>
+                                    )}
+                                {this.state.user_role!=0 && (
                                 <div className="icon icon-shape bg-danger text-dark rounded-circle shadow">
-                                  <i className="fas fa-user-injured"/>
+                                  <i className="fas fa-file-invoice-dollar"/>
                                 </div>
+                                )}
                               </Col>
                             </Row>
                           </CardBody>
                         </Card>
                       </Col>
-                      <Col lg="6" xl="3">
+                     <Col md="1" lg="6" xl="3">
                         <Card className="card-stats mb-4 mb-xl-0">
                           <CardBody className="border rounded border-info">
                             <Row>
@@ -648,15 +715,24 @@ class EventDetails extends React.Component {
                                   tag="h5"
                                   className="text-uppercase text-muted mb-0"
                                 >
-                                  Severity of the event
+                                  Ticketline
                                 </CardTitle>
-                                <span className={this.getBarColor(this.state.event_data.damage)}>
-                                  {this.state.event_data.damage}
-                                </span>
+                                {this.state.event_data["ticketline"]!="None"&&(
+                                <span className={this.getBarColor(Math.floor(this.state.event_data["ticket_sold"]/this.state.event_data["ticket_lotation"]*100))}>
+                                  {this.state.event_data["ticket_sold"]}
+                                </span>/
+                                <span className={this.getBarColor(this.state.event_data["ticket_lotation"])}>
+                                  {this.state.event_data["ticket_lotation"]}
+                                </span>)}
+                                {this.state.event_data["ticketline"]=="None"&&(
+                                <span className="h2 font-weight-bold mb-0">
+                                    No Ticketline
+                                  </span>
+                                    )}
                               </div>
                               <Col className="col-auto">
                                 <div className="icon icon-shape bg-yellow text-dark rounded-circle shadow">
-                                  <i className="fas fa-exclamation-triangle"/>
+                                  <i className="fas fa-ticket-alt"/>
                                 </div>
                               </Col>
                             </Row>
@@ -668,7 +744,7 @@ class EventDetails extends React.Component {
                       <Card>
                         <CardBody>
                           <Row>
-                            {this.state.event_data["car"].map(this.renderCars)}
+                            {/*{this.state.event_data["services"].map(this.renderServices)}*/}
                           </Row>
                         </CardBody>
                       </Card>
