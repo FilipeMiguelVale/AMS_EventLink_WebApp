@@ -98,14 +98,14 @@ class Ticket extends React.Component {
                 )
             );
             const response1 = await fetch(
-                `/range_events?id=${id}&filter=${this.state.dropdownIndex}&quantity=${this.state.dropdownIndex2}&order=${this.state.dropdownIndex3}`
+                '/list_ticketline'
             );
             const result1 = await response1.json();
             if (result1.length == 0)
                 this.setState(
                     prevState => (
                         {
-                            error: "No events to Show"
+                            error: "No Tickets to Buy"
                         }
                     )
                 );

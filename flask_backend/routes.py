@@ -287,13 +287,11 @@ def get_event_icon(status):
         return send_from_directory(app.config['UPLOAD_FOLDER'],"icon_map_red.png" , as_attachment=True)
 
 
-@app.route('/list_events', methods=['GET'])
-def get_events():
+@app.route('/list_ticketline', methods=['GET'])
+def get_ticketline():
     ret = []
     for event in events:
-        print(event)
-        print(type(event))
-        if event["email"] == current_user.email or int(current_user.role)==0:
+        if event["ticketline"]!= "None":    
             ret.append(event)
     return jsonify(ret)#return get_event_by(None, filter="all",city=current_user.city)
 
