@@ -27,6 +27,8 @@ import Users_table from "views/examples/Users_table";
 import Create_event from "./views/examples/Create_event";
 import Inventory from "./views/examples/Inventory";
 import TicketLine from "./views/examples/Ticket";
+import MyTickets from "./views/examples/MyTickets";
+
 
 var routes = [
   {
@@ -111,6 +113,13 @@ var routes = [
     name: "TicketLine",
     icon: "fas fa-ticket-alt",
     component: TicketLine,
+    layout: "/admin"
+  },
+    {
+    path: "/mytickets",
+    name: "My Tickets",
+    icon: "fas fa-ticket-alt",
+    component: MyTickets,
     layout: "/admin"
   },
 ];

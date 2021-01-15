@@ -43,6 +43,7 @@ events = [
  'ticket_sold': '10', 'date': '2020-12-12 22:30', 'staff': 'No Staff Assigned', 'email': 'teste@teste.com',
  'services':['light', 'video', 'space'],"budget":"15000"}
 ]
+tickets=[]
 
 @app.route('/login/request', methods=['POST'])
 def login():
@@ -173,7 +174,10 @@ def add_material():
 @app.route('/buy_ticket/<id>', methods=['POST'])
 def buy_ticket(id):
     print(events[int(id) - 1])
-    events[int(id)-1]["ticket_sold"]= int(events[int(id)-1]["ticket_sold"])+1
+    events[int(id) - 1]["ticket_sold"] = int(events[int(id) - 1]["ticket_sold"]) + 1
+    tickets.append({"buy_date":f"{datetime.now():%Y-%m-%d %H:%M}","email":current_user.email,
+                    "id":len(tickets) + 1,"name":events[int(id) - 1]["name"],"number":events[int(id) - 1]["ticket_sold"],
+                    "promotor_name":events[int(id) - 1]["promotor_name"],"price":events[int(id) - 1]["ticket_price"],"event_date":events[int(id) - 1]["date"]})
     return jsonify({"response": "Done"})
 
 @app.route('/update_material/<id>', methods=['POST'])
@@ -291,7 +295,7 @@ def get_event_icon(status):
 def get_ticketline():
     ret = []
     for event in events:
-        if event["ticketline"]!= "None":    
+        if event["ticketline"]!= "None":
             ret.append(event)
     return jsonify(ret)#return get_event_by(None, filter="all",city=current_user.city)
 
@@ -310,6 +314,14 @@ def get_range_events():
             ret.append(event)
     return jsonify(ret)  # return get_event_by(None, filter="all",city=current_user.city)
 
+@app.route('/my_tickets', methods=['GET'])
+def get_my_tickets():
+    ret = []
+    for ticket in tickets:
+        print(ticket)
+        if ticket["email"] == current_user.email:
+            ret.append(ticket)
+    return jsonify(ret)
 
 
 @app.route('/num_events', methods=['GET'])
